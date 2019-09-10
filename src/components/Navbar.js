@@ -20,9 +20,6 @@ export default class Navbar extends Component {
     </li>
 </ul>
 
-<Link to="/signin" className="ml-auto">
-   
-<ButtonContainer>signin</ButtonContainer></Link>
 <Link to="/cart" className="ml-auto">
     <i class="material-icons">
 shopping_cart

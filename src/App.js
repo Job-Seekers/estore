@@ -10,7 +10,7 @@ import Default from './components/Default'
 import Modal from './components/Modal'
 import Welcome from './components/Welcome';
 import CreateProd from './components/admin/CreateProd';
-import axios from 'axios';
+
 function App() {
   return (
 

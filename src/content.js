@@ -33,17 +33,18 @@ class ProductProvider extends Component {
     alert(err);
 })
 
+
     }
 
-    getItem = (id) =>{
+    getItem = (_id) =>{
 
-        return this.state.products.find(item => item.id === id)
+        return this.state.products.find(item => item._id === _id)
 
     };
 
-    handleDetail = (id) => {
+    handleDetail = (_id) => {
     
-        const product = this.getItem(id)
+        const product = this.getItem(_id)
 
         this.setState( () => {
 
@@ -54,9 +55,9 @@ class ProductProvider extends Component {
         
     };
 
-    addToCart = (id) => {
+    addToCart = (_id) => {
        let tempProducts = [...this.state.products];
-        const index = tempProducts.indexOf(this.getItem(id));
+        const index = tempProducts.indexOf(this.getItem(_id));
 
         const product = tempProducts[index];
         product.inCart =true;
@@ -77,9 +78,9 @@ class ProductProvider extends Component {
 
     };
 
-openModal= id => {
+openModal= _id => {
 
-    const product = this.getItem(id);
+    const product = this.getItem(_id);
     this.setState(
         ()=>{
             return {modalProduct:product,modalOpen:true}
@@ -87,18 +88,18 @@ openModal= id => {
     )
 
 };
- closeModal = id =>{
+ closeModal = _id =>{
 
     this.setState(()=>{
         return {modalOpen:false}
     })
  }
 
- increment = (id)=>{
+ increment = (_id)=>{
 
   let tempCart = [...this.state.cart];
 
-  const selectedProduct=tempCart.find(item=>item.id === id);
+  const selectedProduct=tempCart.find(item=>item._id === _id);
 
   const index= tempCart.indexOf(selectedProduct);
 
@@ -121,11 +122,11 @@ openModal= id => {
   )
  }
 
- decrement = (id) => {
+ decrement = (_id) => {
 
     let tempCart = [...this.state.cart];
 
-    const selectedProduct=tempCart.find(item=>item.id === id);
+    const selectedProduct=tempCart.find(item=>item._id === _id);
   
     const index= tempCart.indexOf(selectedProduct);
   
@@ -135,7 +136,7 @@ openModal= id => {
 
     if (product.count ===0)
     {
-        this.removeItem(id);
+        this.removeItem(_id);
     }
     else{
         product.total=product.count * product.price;
@@ -155,13 +156,13 @@ openModal= id => {
     }
  }
 
- removeItem=(id) =>{
+ removeItem=(_id) =>{
 
     let tempProducts = [...this.state.products];
     let tempCart = [...this.state.cart];
-    tempCart=tempCart.filter(item => item.id !== id);
+    tempCart=tempCart.filter(item => item._id !== _id);
 
-    const index= tempProducts.indexOf(this.getItem(id));
+    const index= tempProducts.indexOf(this.getItem(_id));
     let removedProduct = tempProducts[index];
     removedProduct.inCart=false;
     removedProduct.count=0;

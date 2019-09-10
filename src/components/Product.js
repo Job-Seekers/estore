@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 export default class Product extends Component{
 render(){
 
-    const {id,title,img,price,inCart} = this.props.value;
+    const {_id,title,img,price,inCart} = this.props.value;
 
     return(
 
@@ -14,15 +14,15 @@ render(){
           <ProductConsumer>
               {
                   value => (
-                  <div className="img-container p-5" onClick={()=>value.handleDetail(id)}>
+                  <div className="img-container p-5" onClick={()=>value.handleDetail(_id)}>
                   <Link to="/details">
                       <img src ={img} alt="product" className="card-img-top" />
                   </Link>
                   <button className="cart-btn" disabled={inCart?true:false} 
                   onClick={
                       ()=>{
-                      value.addToCart(id);
-                      value.openModal(id);
+                      value.addToCart(_id);
+                      value.openModal(_id);
                       }
                   }>
                       {inCart? (<p className="text-capitalize mb-0" disabled> inCart</p>):
