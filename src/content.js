@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-
-import { storeProducts, detailProduct } from './data'
+import React, { Component } from 'react';
+import Axios from 'axios';
 
 const ProductContext = React.createContext();
 //provider
@@ -10,10 +9,10 @@ class ProductProvider extends Component {
 
     state = {
         products: [],
-        detailProduct: detailProduct,
+        detailProduct: [],
         cart:[],
         modalOpen:false,
-        modalProduct:detailProduct,
+        modalProduct:[],
         cartSubTotal:0,
         cartTotal:0,
         cartTax:0,
@@ -26,19 +25,13 @@ class ProductProvider extends Component {
 
     setProducts(){
 
-        let tempProducts=[];
-        storeProducts.forEach(item =>{
-
-            const singleItem ={...item};
-            tempProducts =[...tempProducts,singleItem];
-
-        })
-
-        this.setState(()=>{
-            return {products:tempProducts};
-
-        })
-
+ Axios.get('https://estoreapi.herokuapp.com/products')
+.then(response => {
+    this.setState({ products: response.data });
+  })
+.catch(err =>{
+    alert(err);
+})
 
     }
 

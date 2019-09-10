@@ -8,13 +8,17 @@ import Cart from './components/cart'
 import Productlist from './components/Productlist'
 import Default from './components/Default'
 import Modal from './components/Modal'
+import Welcome from './components/Welcome';
+import CreateProd from './components/admin/CreateProd';
+import axios from 'axios';
 function App() {
   return (
 
     <React.Fragment>      
-    <Navbar></Navbar>
-    <Switch>
-      <Route exact path="/" component={Productlist}></Route>
+    <Navbar />
+      <Switch>
+      <Route exact path="/" component={Welcome}></Route>
+      <Route exact path="/products" component={Productlist}></Route>
       <Route path="/details" component={Details}></Route>
       <Route path="/cart" component={Cart}></Route>
       <Route component={Default}></Route>

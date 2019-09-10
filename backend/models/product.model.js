@@ -2,42 +2,19 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const ProductSchema = new Schema(
     {
-        username:{
-            type:String,
-            required:true,
-            unique:true,
-            trim:true,
-            minlength:3
-        },
-        password:{
-            type:String,
-            required:true,
-            minlength:6
+    title: {type:String,required:true},
+    img: {type:String,required:true},
+    price:{type:Number,required:true},
+    company:{type:String,required:true},
+    info:{type:String,required:true},
+    inCart:{type:Boolean,required:true},
+    count:{type:Number,required:true},
+    total: {type:Number,required:true}
+    }
+);
 
-        },
-        type:{
-            type:String,
-        },
-        fullname:{
-            type:String,
-        },
-        email
-:
-{
-    type:String,
-},
-country
-:
-{
-    type:String,
-},
-phone
-:
-{
-    type:String,
-},
+const Product =mongoose.model('Product',ProductSchema);
 
-}
-)
+module.exports=Product;
