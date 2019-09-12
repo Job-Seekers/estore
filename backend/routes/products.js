@@ -22,7 +22,7 @@ router.route('/add').post((req,res) => {
     const newProduct = new Product({title,img,price,company,info,inCart,count,total});
     
     newProduct.save()
-        .then(()=> res.json('Product Added!'))
+    .then((newProduct)=> res.json(newProduct))
         .catch(err => res.status(400).json('Error: ' + err ));
 
 });
@@ -51,9 +51,10 @@ router.route('/add').post((req,res) => {
 
 });
 
-router.route('update/:id').get((req,res)=>{
+router.route('/delete/:id').get((req,res)=>{
     
-    Product.findOne({"_id":req.params.id})
+    Product.findOneAndRemove({"_id":req.params.id})
+    .exec()
     .then(Products => res.json(Products))
     .catch(err => res.status(400).json('Error: ' + err));
 });

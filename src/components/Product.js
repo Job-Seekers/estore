@@ -14,15 +14,36 @@ render(){
           <ProductConsumer>
               {
                   value => (
+
+                    
+
                   <div className="img-container p-5" onClick={()=>value.handleDetail(_id)}>
+                   
+                    <button className="del-btn" disabled={value.type !== "admin"?true:false} 
+                    onClick={
+                        ()=>{
+                        value.deleteProduct(_id);
+                        const product = value.getItem(_id)
+                      value.openModal(product);
+                        }
+                    }
+
+                    >
+                        <i class="material-icons">
+                          delete
+                    </i>
+                    </button>
+
                   <Link to="/details">
                       <img src ={img} alt="product" className="card-img-top" />
                   </Link>
+                  
                   <button className="cart-btn" disabled={inCart?true:false} 
                   onClick={
                       ()=>{
                       value.addToCart(_id);
-                      value.openModal(_id);
+                      const product = value.getItem(_id)
+                      value.openModal(product);
                       }
                   }>
                       {inCart? (<p className="text-capitalize mb-0" disabled> inCart</p>):
@@ -93,6 +114,20 @@ const ProductWrapper = styled.div `
     transform:scale(1.2);
 }
 
+del-btn{
+    position:absolute;
+    top:0;
+    right:0;
+    padding:0.2rem 0.4rem;
+    background:var(--lightBlue);
+    broder:none;
+    color:var(--mainWhite);
+    font-size:1.4rem;
+    border-radius:0.5rem 0 0 0;
+    transform:translate(100%,100%)
+}
+
+
 .cart-btn{
     position:absolute;
     bottom:0;
@@ -106,7 +141,7 @@ const ProductWrapper = styled.div `
     transform:translate(100%,100%)
 }
 
-.img-container:hover .cart-btn{
+.img-container:hover .cart-btn {
 
     transform:translate(0,0)
 }
@@ -116,5 +151,9 @@ const ProductWrapper = styled.div `
     color:var(--mainBlue);
     cursor:pointer;
 }
+.del-btn:hover{
 
+    color:var(--mainBlue);
+    cursor:pointer;
+}
 `;

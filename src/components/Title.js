@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {ProductConsumer} from '../content';
+import {Link} from 'react-router-dom';
+import { ButtonContainer } from './Button';
 
 export default function Title ({type,title}) {
 
@@ -8,9 +11,11 @@ export default function Title ({type,title}) {
                 <h1 className="text-capitalize font-weight-bold">
             {type} <strong className="text-blue">{title}</strong>
                 </h1>
+               
             <div className="row"/>
             </div> 
             </div>
         )
     
 }
+        

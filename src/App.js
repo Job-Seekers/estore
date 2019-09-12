@@ -9,7 +9,7 @@ import Productlist from './components/Productlist'
 import Default from './components/Default'
 import Modal from './components/Modal'
 import Welcome from './components/Welcome';
-import CreateProd from './components/admin/CreateProd';
+import CreateProd from './components/admin/CreateProd'
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
       <Route exact path="/products" component={Productlist}></Route>
       <Route path="/details" component={Details}></Route>
       <Route path="/cart" component={Cart}></Route>
+      <Route path="/addproduct" component={CreateProd}></Route>
       <Route component={Default}></Route>
     </Switch>
    

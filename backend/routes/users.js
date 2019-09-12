@@ -9,10 +9,16 @@ router.route('/').get((req,res) =>{
 
 });
 
-router.route('/add').post((res,req) => {
+router.route('/add').post((req,res) => {
 
-    const username = req.body.username;
-    const newUser = new User({username});
+    const Username = req.body.Username;
+    const password=req.body.password;
+    const email=req.body.email;
+    const type =req.body.type;
+    const fullname= req.body.fullname;
+    const country = req.body.country;
+    const phone= req.body.phone;
+    const newUser = new User({Username,password,email,type,fullname,country,phone});
 
     newUser.save()
         .then(()=> res.json('User Added!'))
