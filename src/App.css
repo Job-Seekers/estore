@@ -47,3 +47,12 @@
   font-size: 1.2rem;
   color:var(--mainYellow);
 }
+
+.welcome{
+  min-height: calc(100vh - 94px);
+  background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(./welcome.jpg);
+  background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

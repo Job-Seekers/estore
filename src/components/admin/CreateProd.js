@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { ButtonContainer } from '../Button';
-import axios from 'axios';
 import {ProductConsumer} from '../../content';
-import { number } from 'prop-types';
+
 
 export default class CreateProd extends Component {
     constructor(props) {

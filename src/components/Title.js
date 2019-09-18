@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {ProductConsumer} from '../content';
-import {Link} from 'react-router-dom';
-import { ButtonContainer } from './Button';
+import React from 'react';
+
 
 export default function Title ({type,title}) {
 

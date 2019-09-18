@@ -16,13 +16,15 @@ class ProductProvider extends Component {
         cartSubTotal: 0,
         cartTotal: 0,
         cartTax: 0,
-        user: [],
+        users: [],
         type: '',
+        loading: false,
+        signin:false,
     }
 
     componentDidMount() {
         this.setProducts();
-        this.setUser();
+        this.setUsers();
     }
 
     setProducts() {
@@ -37,19 +39,33 @@ class ProductProvider extends Component {
 
         }
 
-    setUser() {
+    setUsers() {
 
         Axios.get('https://estoreapi.herokuapp.com/users')
             .then(response => {
             
-                this.setState({ user: response.data, type: response.data["0"].type });
+                this.setState({ users: response.data, type: response.data["0"].type ,loading:true});
 
             })
             .catch(err => {
                 alert(err);
             })
-    }
+    };
+    onLogin=(user)=>{
 
+        this.setUsers();
+        const verification = this.state.users(x => (x.username === user.username && x.password === user.password));
+
+        if(verification)
+        this.setState({signin:true});
+        else
+        this.setState({signin:false});
+
+        return this.state.signin;
+
+        
+
+    };
 
     deleteProduct=(id)=>{
        const  url = 'https://estoreapi.herokuapp.com/products/delete/' + id
@@ -287,6 +303,7 @@ class ProductProvider extends Component {
                 setProducts:this.setProducts,
                 getItem:this.getItem,
                 onSubmit:this.onSubmit,
+                onLogin:this.onLogin,
 
             }}>
                 {this.props.children}
