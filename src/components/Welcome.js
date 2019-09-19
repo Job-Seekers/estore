@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonContainer } from './Button'
+import {Link} from 'react-router-dom'
 
 export default class Welcome extends Component {
     render() {
@@ -12,9 +13,9 @@ export default class Welcome extends Component {
                             <div class=" text-center">
                                 <div class="display-1 text-capitalize w-50 mx-auto">
                                     <h1 className="text-white">Welcome to Smart Bazar</h1>
-                                    <a href="/products" class="btn header-link align-items-center ">
+                                    <Link to="/products" class="btn header-link align-items-center ">
                         <ButtonContainer>Shop Now</ButtonContainer>
-                                     </a>
+                                     </Link>
                                 </div>
                             </div>
                         </div>
