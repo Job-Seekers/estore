@@ -44,7 +44,7 @@ class ProductProvider extends Component {
         Axios.get('https://estoreapi.herokuapp.com/users')
             .then(response => {
             
-                this.setState({ users: response.data, type: response.data["0"].type ,loading:true});
+                this.setState({ users: response.data,loading:true});
 
             })
             .catch(err => {

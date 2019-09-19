@@ -10,13 +10,33 @@ import Default from './components/Default'
 import Modal from './components/Modal'
 import Welcome from './components/Welcome';
 import CreateProd from './components/admin/CreateProd'
-import Signin from './components/Signin';
-import Signup from './components/Signup';
+import { Provider } from 'react-redux';
+import store from './store';
+import Register from './components/Register';
+import Login from './components/Login';
+
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './setAuthToken';
+import { setCurrentUser, logoutUser } from './actions/authentication';
+
+if(localStorage.jwtToken) {
+  setAuthToken(localStorage.jwtToken);
+  const decoded = jwt_decode(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(decoded));
+
+  const currentTime = Date.now() / 1000;
+  if(decoded.exp < currentTime) {
+    store.dispatch(logoutUser());
+    window.location.href = '/login'
+  }
+}
+
 
 function App() {
   return (
 
     <React.Fragment>      
+      <Provider store = { store }>
     <Navbar />
   
       <Switch>
@@ -25,12 +45,13 @@ function App() {
       <Route path="/details" component={Details}></Route>
       <Route path="/cart" component={Cart}></Route>
       <Route path="/addproduct" component={CreateProd}></Route>
-      <Route path="/signup" component={Signup}></Route>
-      <Route path="/signin" component={Signin}></Route>
+      <Route exact path="/register" component={ Register } />
+       <Route exact path="/login" component={ Login } />
       <Route component={Default}></Route>
     </Switch>
    
     <Modal></Modal>
+    </Provider>
     </React.Fragment>
 
   );

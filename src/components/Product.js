@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {ProductConsumer} from '../content';
 import {Link} from 'react-router-dom';
-export default class Product extends Component{
-render(){
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authentication';
+import { withRouter } from 'react-router-dom';
 
+
+ class Product extends Component{
+
+ 
+
+render(){
+    const {isAuthenticated,user} = this.props.auth;
     const {_id,title,img,price,inCart} = this.props.value;
 
     return(
@@ -19,34 +28,38 @@ render(){
 
                   <div className="img-container p-5" onClick={()=>value.handleDetail(_id)}>
                    
-                    <button className="del-btn" disabled={value.type !== "admin"?true:false} 
+                    {   
+                            user.name === 'Mukesh P'?
+                     <button className="del-btn" 
                     onClick={
                         ()=>{
                         value.deleteProduct(_id);
                         const product = value.getItem(_id)
                       value.openModal(product);
                         }
-                    }
-
-                    >
+                    } >
                         <i class="material-icons">
                           delete
                     </i>
-                    </button>
+                    </button>:true
+              }
 
                   <Link to="/details">
                       <img src ={img} alt="product" className="card-img-top" />
                   </Link>
                   
-                  <button className="cart-btn" disabled={inCart?true:false} 
+                  <button className="cart-btn" disabled={!isAuthenticated?true:inCart?true:false} 
                   onClick={
                       ()=>{
+                          
                       value.addToCart(_id);
                       const product = value.getItem(_id)
                       value.openModal(product);
+                      
                       }
                   }>
-                      {inCart? (<p className="text-capitalize mb-0" disabled> inCart</p>):
+                      {!isAuthenticated? (<p className="text-capitalize mb-0" disabled> <Link className="nav-link" to="/login">Sign In</Link></p>):
+                    inCart?(<p className="text-capitalize mb-0" disabled> InCart </p>):
                     <i class="material-icons">
                     add_shopping_cart
                     </i> }
@@ -78,6 +91,17 @@ render(){
 }
 
 }
+
+
+Product.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps, { logoutUser })(withRouter(Product));
 
 
 const ProductWrapper = styled.div `

@@ -3,15 +3,18 @@ import styled from 'styled-components'
 import { ProductConsumer } from '../content'
 import { ButtonContainer } from './Button'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authentication';
+import { withRouter } from 'react-router-dom';
 
-
-export default class Modal extends Component {
+class Modal extends Component {
     render() {
         return (
             <ProductConsumer>
                 {
                     value => {
-
+                       
                         const { modalOpen, closeModal } = value;
                         const { img, title, price } = value.modalProduct;
                         if (!modalOpen)
@@ -34,6 +37,7 @@ export default class Modal extends Component {
                                                 <Link to="/cart">
                                                     <ButtonContainer onClick={()=> closeModal()} >Go To Cart</ButtonContainer>
                                                 </Link>
+                                            
                                             </div>
                                         </div>
 
@@ -49,7 +53,15 @@ export default class Modal extends Component {
     }
 }
 
+Modal.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+}
 
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps, { logoutUser })(withRouter(Modal));
 const ModalContainer = styled.div`
 position:fixed;
 top:0;
