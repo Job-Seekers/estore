@@ -20,10 +20,12 @@ export default class Cart extends Component {
 
                             return (
                                 <React.Fragment>
+                                    <div className="container">
                                 <Title type="Your" title="Cart"></Title>
                                 <CartColumns />
                                 <CartList value={value} />
                                 <CartTotals value={value} history ={this.props.history}/>
+                                </div>  
                                 </React.Fragment>
 
                             );

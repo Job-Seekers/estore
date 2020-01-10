@@ -1,39 +1,90 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authentication';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import {ButtonContainer} from './Button'
-/*Navbar */
-export default class Navbar extends Component {
-    render() {
+import { ButtonContainer } from './Button';
 
-        return (
-<NavWrapper className="navbar navbar-expand-sm  navbar-dark px-sm-5">
 
-<Link to='/'>
-    Home
-</Link>
-<ul className="navbar-nav align-items-center">
-    <li className="nav-item ml-5">
-        <Link to="/products" className="nav-link">
-            Products
-        </Link>
-    </li>
-</ul>
 
-<Link to="/signin" className="ml-auto">
-   
-<ButtonContainer>signin</ButtonContainer></Link>
-<Link to="/cart" className="ml-auto">
-    <i class="material-icons">
-shopping_cart
-</i>
-<ButtonContainer>cart</ButtonContainer></Link>
-</NavWrapper>
-        );
+class Navbar extends Component {
+
+    onLogout(e) {
+        e.preventDefault();
+        this.props.logoutUser(this.props.history);
     }
 
+    render() {
+        const {isAuthenticated, user} = this.props.auth;
+        const authLinks = (
+            <ul className="navbar-nav ml-auto">
+                <Link to="#" className="ml-auto" onClick={this.onLogout.bind(this)}>
+                <ButtonContainer >
+                    <img src={user.avatar} alt={user.name} title={user.name}
+                        className="rounded-circle"
+                        style={{ width: '25px', marginRight: '5px'}} />
+                            Log Out
+                            </ButtonContainer>
+                            </Link>
+                <Link to="/cart" className="ml-auto">
+                            <ButtonContainer >
+                                <i class="material-icons">
+                                    shopping_cart
+                             </i>
+                                CART
+                        </ButtonContainer>
+                        </Link>
+                   
+                    
+
+            </ul>
+        )
+      const guestLinks = (
+        <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+                <Link className="nav-link" to="/register">Sign Up</Link>
+            </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/login">Sign In</Link>
+            </li>
+        </ul>
+      )
+        return(
+            <NavWrapper>
+            <nav className="navbar navbar-expand-sm  navbar-dark px-sm-5">
+            <ul className="navbar-nav align-items-center">
+                            <li className="nav-item ml-5">
+                                <Link to="/" className="nav-link">
+                                    Home
+                        </Link>
+                            </li>
+
+                            <li className="nav-item ml-5">
+                                <Link to="/products" className="nav-link">
+                                    Products
+                         </Link>
+                            </li>
+                        </ul>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    {isAuthenticated ? authLinks : guestLinks}
+                </div>
+            </nav>
+            </NavWrapper>
+        )
+    }
+}
+Navbar.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 }
 
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, { logoutUser })(withRouter(Navbar));
 
 const NavWrapper = styled.nav`
 background: var(--mainBlue);
@@ -42,5 +93,4 @@ background: var(--mainBlue);
     font-size:1.3rem;
     text-tranform: capitalize !important;
 }
-
 `;
